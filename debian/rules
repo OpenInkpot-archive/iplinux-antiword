@@ -1,0 +1,42 @@
+#!/usr/bin/make -f
+
+build: build-stamp
+build-stamp:
+	dh_testdir
+
+	$(MAKE) CC=$(DEB_HOST_GNU_TYPE)-gcc LD=$(DEB_HOST_GNU_TYPE)-gcc OPT="$(CFLAGS)"
+
+	touch $@
+
+clean:
+	dh_testdir
+	dh_testroot
+
+	$(MAKE) clean
+
+	dh_clean 
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_installdirs
+
+	install $(CURDIR)/antiword $(CURDIR)/debian/antiword/usr/bin/antiword
+
+binary-indep: build install
+
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+	dh_link -s
+	dh_strip -s --dbg-package=antiword-dbg
+	dh_compress -s
+	dh_fixperms -s
+	dh_installdeb -s
+	dh_shlibdeps -s
+	dh_gencontrol -s
+	dh_builddeb -s
+
+binary: binary-indep binary-arch
+.PHONY: configure build clean binary-indep binary-arch binary install

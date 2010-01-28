@@ -1,0 +1,25 @@
+Source: antiword
+Section: core
+Priority: optional
+Maintainer: Mikhail Gusarov <dottedmag@dottedmag.net>
+Standards-Version: 3.8.3
+Build-Depends: debhelper (>= 7)
+XCS-Cross-Host-Build-Depends: debhelper (>= 7)
+
+Package: antiword
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: free Microsoft Word reader
+ antiword is a tool which converts Microsoft Word documents to plain text,
+ postscript, PDF and DocBook/XML.
+
+Package: antiword-dbg
+Section: debug
+Priority: extra
+Architecture: any
+Depends: antiword (= ${binary:Version})
+Description: free Microsoft Word reader - debug symbols
+ antiword is a tool which converts Microsoft Word documents to plain text,
+ postscript, PDF and DocBook/XML.
+ .
+ This package contains debugging symbols.
